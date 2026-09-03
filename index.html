@@ -6,24 +6,12 @@
     <title>INST630 — Coursework</title>
     <style>
       :root {
-        color-scheme: light dark;
         --bg: #fefefe;
         --fg: #1f2328;
         --muted: #59636e;
         --accent: #2c5aa0;
         --card: #f6f8fa;
         --border: #d1d9e0;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #0d1117;
-          --fg: #e6edf3;
-          --muted: #9198a1;
-          --accent: #6ea8fe;
-          --card: #161b22;
-          --border: #30363d;
-        }
       }
 
       body {
@@ -42,7 +30,7 @@
       }
 
       header {
-        border-bottom: 3px solid var(--accent);
+        border-bottom: 1px solid var(--accent);
         padding-bottom: 1rem;
         margin-bottom: 2.5rem;
       }
@@ -50,11 +38,6 @@
       h1 {
         margin: 0 0 0.25rem;
         font-size: 2rem;
-      }
-
-      .tagline {
-        margin: 0;
-        color: var(--muted);
       }
 
       h2 {
@@ -77,7 +60,6 @@
 
       article {
         border: 1px solid var(--border);
-        border-left: 4px solid var(--accent);
         border-radius: 8px;
         padding: 1rem 1.25rem;
         background-color: var(--card);
@@ -102,14 +84,6 @@
         outline: 2px solid var(--accent);
         outline-offset: 3px;
       }
-
-      footer {
-        margin-top: 3rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 0.9rem;
-      }
     </style>
   </head>
 
@@ -117,11 +91,10 @@
     <main>
       <header>
         <h1>INST630</h1>
-        <p class="tagline">Coursework and assignments</p>
       </header>
 
       <section>
-        <h2>Assignments</h2>
+        <h2>Tutorials</h2>
         <ul>
           <li>
             <article>
@@ -138,10 +111,6 @@
           </li>
         </ul>
       </section>
-
-      <footer>
-        <p>Published with GitHub Pages.</p>
-      </footer>
     </main>
   </body>
 </html>
