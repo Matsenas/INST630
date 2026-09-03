@@ -5,7 +5,8 @@ Guidance for AI coding agents working in this repository.
 ## Project
 
 Coursework for **INST630**. Each assignment lives in its own folder at the
-repository root (`w1/`, `w2/`, …); `index.html` at the root is the hub page
+repository root, named after the tutorial it covers (`tutorial_1/`,
+`tutorial_2/`, …); `index.html` at the root is the hub page
 that links to them. The site is published with GitHub Pages from the `main`
 branch, so every path must work as a plain static file — there is no build
 step, bundler, or server.
@@ -40,8 +41,8 @@ No transpiler is configured; browsers run the source as written.
 
 ## Working in this repo
 
-- Add a new assignment as a new top-level folder, then link it from the
-  assignment list in `index.html`.
+- Add a new assignment as a new top-level `tutorial_N/` folder, then link it
+  from the assignment list in `index.html`.
 - Keep files relative-linked so they resolve under the GitHub Pages
   subdirectory.
 - Preview locally by opening the file in a browser, or with
