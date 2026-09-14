@@ -1,0 +1,464 @@
+/* ===========================================
+   TUTORIAL 3: CSS GRID LAYOUT
+   
+   Your tasks:
+   1. Define the page grid on .page-layout
+   2. Assign grid-area to each section
+   3. Make .list-section items flow with Flexbox
+   4. Add mobile breakpoint under 48rem
+   =========================================== */
+
+/* External font - add your choice from Google Fonts, Inter will not be graded */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+:root {
+  /* Spacing scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Colors - customize these */
+  --color-bg: hsl(210, 20%, 98%);
+  --color-surface: hsl(0, 0%, 100%);
+  --color-text: hsl(210, 10%, 20%);
+  --color-text-muted: hsl(210, 10%, 50%);
+  --color-accent: hsl(220, 80%, 50%);
+  --color-border: hsla(210, 10%, 20%, 0.1);
+  
+  /* Typography */
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif; /* Change this */
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* ===========================================
+   TASK 1: PAGE GRID STRUCTURE
+   
+   Define your grid here. You need:
+   - grid-template-areas for the layout map
+   - grid-template-columns for column widths
+   - grid-template-rows for row heights
+   - min-height: 100vh to fill the viewport
+   - gap for spacing between regions
+   =========================================== */
+
+.page-layout {
+  display: grid;
+
+  grid-template-areas:
+    "header header  header  header"
+    ".      hero    hero    ."
+    ".      list    list    ."
+    ".      footer  footer  .";
+
+  grid-template-columns: auto 1fr 1fr auto;
+  grid-template-rows: auto 1fr 2fr auto;
+
+  min-height: 100vh;
+  gap: var(--spacing-md);
+}
+
+/* ===========================================
+   TASK 2: ASSIGN GRID AREAS
+   
+   Connect each section to its named area
+   =========================================== */
+
+.site-header {
+  grid-area: header;
+  background: var(--color-surface);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-section {
+  grid-area: hero;
+  padding: var(--spacing-xl);
+}
+
+.list-section {
+  grid-area: list;
+  padding: var(--spacing-lg);
+  align-content: flex-start;
+}
+
+.site-footer {
+  grid-area: footer;
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: var(--spacing-lg);
+  /* NOTE: Footer should not exceed main content width */
+}
+
+/* ===========================================
+   TASK 3: FLEXBOX FOR COMPONENTS
+   
+   Use Flexbox to arrange items WITHIN grid regions
+   =========================================== */
+
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--spacing-md);
+  list-style: none;
+  padding: 0;
+}
+
+/* Large screens: cards flow left to right and wrap onto new lines. */
+.list-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1em;
+  align-content: flex-start;
+}
+
+.list-item {
+  background: var(--color-surface);
+  padding: var(--spacing-lg);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  flex: 1 1 20rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 16px;
+}
+
+.main-content {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px;
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.image-placeholder {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.description {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 16px;
+  
+  min-width: 0;
+
+  /* Inside auto layout */
+  order: 1;
+  flex: 1 1 auto;
+}
+
+.header {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0px;
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.title-date {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.card-header {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  /* identical to box height */
+  
+  color: #1E1E1E;
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.card-date {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  
+  color: #1E1E1E;
+  
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+
+.author {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+
+.profile-image {
+  width: 16px;
+  height: 16px;
+  
+  background: url(Portrait_Placeholder);
+  border-radius: 24px;
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.author-name {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 15px;
+  /* identical to box height */
+  
+  color: #1E1E1E;
+  
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.text {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  min-width: 0;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.text p {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  
+  color: #1E1E1E;
+}
+
+.engagement-bar {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 24px;
+  gap: 29px;
+
+  width: 100%;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.engagement-metric {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 12px;
+  
+  margin: 0 auto;
+  
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.icon {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  
+  width: 18px;
+  height: 16px;
+  
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.icon svg {
+  box-sizing: border-box;
+  
+  width: 18px;
+  height: 16px;
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+
+.engagement-label {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 15px;
+  /* identical to box height */
+  
+  color: #1E1E1E;
+  
+  
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+/* ===========================================
+   TASK 4: RESPONSIVE BREAKPOINT
+   
+   Under 48rem:
+   - Stack all grid regions vertically
+   - List items should stack vertically too
+   =========================================== */
+
+@media (max-width: 48rem) {
+  .page-layout {
+    grid-template-areas:
+      "header"
+      "hero"
+      "list"
+      "footer";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+  }
+
+  /* Small screens: one card per line, stacked top to bottom. */
+  .list-section {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .list-item {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+/* ===========================================
+   TYPOGRAPHY (provided)
+   =========================================== */
+
+h1 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
