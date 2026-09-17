@@ -81,7 +81,8 @@ ol {
     "overview"
     "ingredients"
     "instructions"
-    "footer";
+    "footer"
+    "ref";
   grid-template-columns: minmax(0, 1fr);
   gap: var(--spacing-sm);
   max-width: var(--content-max);
@@ -95,6 +96,7 @@ ol {
 .ingredients-section  { grid-area: ingredients; }
 .instructions-section { grid-area: instructions; }
 .recipe-footer        { grid-area: footer; }
+.recipe-ref           { grid-area: ref; }
 
 /* Morpheus backdrop */
 .recipe-container::before {
@@ -233,6 +235,47 @@ h2,
 .ingredients-list,
 .instructions-list {
   padding-left: calc(var(--spacing-md) + var(--spacing-lg));
+}
+
+/* Reference row */
+.recipe-ref {
+  display: flex;
+  justify-content: center;
+}
+
+.ref-button {
+  position: relative;
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--green-hot);
+  text-decoration: none;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.ref-button:hover,
+.ref-button:focus-visible {
+  background: var(--green-hot);
+  color: var(--black);
+  outline: none;
+}
+
+.ref-image {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: calc(100vw - 2 * var(--spacing-md));
+  max-height: calc(100vh - 2 * var(--spacing-md));
+  background: var(--black);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ref-button:hover .ref-image,
+.ref-button:focus-visible .ref-image {
+  display: block;
 }
 
 /* Solid edges: closed top on the header and each h2,
