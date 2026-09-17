@@ -1,84 +1,250 @@
-/* INTENTIONALLY UGLY STARTER STYLES */
-/* These styles are very, very ugly. */
-/* Time to make them attractive, legible, and usable */
+/* ===========================================
+   PROJECT 1: RECIPE CARD
+   Visual direction: MORPHEUSamp Winamp skin
+   (black ground, phosphor-green chrome).
+   =========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  /* Spacing scale */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+
+  /* Colors — sampled from the skin bitmaps */
+  --black: #000000;
+  --green-hot: #00ff00;
+  --green: #00cc00;
+  --green-mid: #008000;
+  --green-dim: #004000;
+  --white: #ffffff;
+
+  /* Typography — one bitmap face */
+  --font: 'Press Start 2P', system-ui, monospace;
+
+  /* Layout */
+  --content-max: 64rem;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  color-scheme: dark;
+}
 
 body {
-    font-family: Times, serif;
-    background-color: #ff00ff;
-    margin: 0;
-    padding: 0;
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 0.75rem;
+  background: var(--black);
+  color: var(--green);
+  line-height: 1.8;
 }
 
+strong {
+  color: var(--green-hot);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul,
+ol {
+  padding-left: var(--spacing-lg);
+}
+
+::selection {
+  background: var(--green-hot);
+  color: var(--black);
+}
+
+:focus-visible {
+  outline: 1px solid var(--green-hot);
+  outline-offset: 2px;
+}
+
+/* Page grid */
 .recipe-container {
-    background-color: yellow;
-    border: 10px solid red;
-    margin: 10px;
-    padding: 5px;
+  display: grid;
+  grid-template-areas:
+    "header"
+    "overview"
+    "ingredients"
+    "instructions"
+    "footer";
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-sm);
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  isolation: isolate; /* keeps the backdrop's z-index: -1 inside the card */
 }
 
-.recipe-header {
-    background-color: lime;
-    border: 3px dotted blue;
-    text-align: center;
+.recipe-header        { grid-area: header; }
+.recipe-overview      { grid-area: overview; }
+.ingredients-section  { grid-area: ingredients; }
+.instructions-section { grid-area: instructions; }
+.recipe-footer        { grid-area: footer; }
+
+/* Morpheus backdrop */
+.recipe-container::before {
+  content: "";
+  grid-row: ingredients-start / instructions-end;
+  grid-column: 1 / -1;
+  z-index: -1;
+  background: url("morpheus.png") no-repeat right top / cover;
+  pointer-events: none;
 }
 
-.recipe-title {
-    color: red;
-    font-size: 40px;
-    text-decoration: underline;
+/* Row 2 - overview grid: image, meta, description.
+   Single column on small screens. */
+.recipe-overview {
+  display: grid;
+  grid-template-areas:
+    "image"
+    "meta"
+    "description";
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-sm);
 }
 
-.recipe-meta {
-    background-color: orange;
-    border: 2px dashed purple;
-}
-
-.recipe-description {
-    background-color: aqua;
-    font-size: 8px;
-    color: purple;
-}
-
-.ingredients-section {
-    background-color: pink;
-    border: 5px solid brown;
-}
-
-.ingredients-list {
-    list-style: none;
-}
-
-.ingredients-list li {
-    background-color: white;
-    border: 1px solid black;
-    margin: 2px;
-    padding: 1px;
-}
-
+/* Rows 3 & 4 - heading and list are framed separately,
+   spaced with the same gap as the page grid. */
+.ingredients-section,
 .instructions-section {
-    background-color: lightgray;
-    border: 3px solid navy;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
-.instruction-step {
-    background-color: beige;
-    border: 2px solid maroon;
-    margin: 3px;
+.recipe-figure      { grid-area: image; }
+.recipe-meta        { grid-area: meta; }
+.recipe-description { grid-area: description; }
+
+/* Image centered in its cell with flexbox */
+.recipe-figure {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
+@media (min-width: 48rem) {
+  .recipe-container {
+    padding: var(--spacing-lg);
+  }
+
+  .recipe-overview {
+    grid-template-areas:
+      "image meta"
+      "image description";
+    grid-template-columns: minmax(12rem, 1fr) 2fr;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+  }
+}
+
+/* ===========================================
+   HEADINGS — pixel-grid shadows
+   Press Start 2P is an 8×8 bitmap face, so one
+   glyph pixel is font-size / 8. Shadows step in
+   that unit to stay on the grid.
+   =========================================== */
+
+/* green-mid one pixel left, green-dim one pixel up */
+h1,
+h2 {
+  --px: calc(1em / 8);
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--green-hot);
+  text-shadow:
+    calc(-1 * var(--px)) 0 0 var(--green-mid),
+    0 calc(-1 * var(--px)) 0 var(--green-dim);
+}
+
+h2 {
+  text-decoration: underline;
+  text-decoration-thickness: var(--stroke);
+  text-underline-offset: 0.25em;
+}
+
+@media (min-width: 48rem) {
+  .recipe-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* ===========================================
+   BRACKET FRAME — the skin's main-window edge:
+   full vertical strokes left and right, short
+   ticks at each corner, open top and bottom.
+   Six solid gradient layers, one per stroke.
+   Applied to every top-level grid row. A tick
+   set to 100% becomes a solid edge.
+   =========================================== */
+
+h2,
+.recipe-header,
+.recipe-overview,
+.ingredients-list,
+.instructions-list,
 .recipe-footer {
-    background-color: violet;
-    text-align: right;
-    font-size: 6px;
+  --stroke: 3px;
+  --tick-top: var(--spacing-md);
+  --tick-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-image:
+    linear-gradient(var(--green-hot), var(--green-hot)),   /* left vertical */
+    linear-gradient(var(--green-hot), var(--green-hot)),   /* right vertical */
+    linear-gradient(var(--green-hot), var(--green-hot)),   /* top-left tick */
+    linear-gradient(var(--green-hot), var(--green-hot)),   /* top-right tick */
+    linear-gradient(var(--green-hot), var(--green-hot)),   /* bottom-left tick */
+    linear-gradient(var(--green-hot), var(--green-hot));   /* bottom-right tick */
+  background-size:
+    var(--stroke) 100%,
+    var(--stroke) 100%,
+    var(--tick-top) var(--stroke),
+    var(--tick-top) var(--stroke),
+    var(--tick-bottom) var(--stroke),
+    var(--tick-bottom) var(--stroke);
+  background-position:
+    left top,
+    right top,
+    left top,
+    right top,
+    left bottom,
+    right bottom;
+  background-repeat: no-repeat;
 }
 
-.recipe-image {
-    width: 50px;
-    height: 50px;
-    border: 5px solid black;
+/* Framed lists: room for outside markers ("10.") inside the left stroke */
+.ingredients-list,
+.instructions-list {
+  padding-left: calc(var(--spacing-md) + var(--spacing-lg));
 }
 
-* {
-    margin: 2px;
-    padding: 1px;
+/* Solid edges: closed top on the header and each h2,
+   closed bottom on the overview, lists, and footer */
+.recipe-header,
+h2 {
+  --tick-top: 100%;
+}
+
+.recipe-overview,
+.ingredients-list,
+.instructions-list,
+.recipe-footer {
+  --tick-bottom: 100%;
 }
