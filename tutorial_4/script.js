@@ -37,6 +37,9 @@ const btnNo        = document.querySelector('#btn-no');
 const confirmation = document.querySelector('#confirmation');
 const regret       = document.querySelector('#regret');
 
+// Start with Going disabled if the name field is empty on page load.
+btnYes.disabled = nameInput.value.trim() === '';
+
 
 // ── 3. HELPERS: small functions that do one thing ───────────
 //
@@ -90,7 +93,7 @@ btnNo.addEventListener('click', () => {
   btnNo.classList.add('active');
   btnYes.classList.remove('active');
   guestField.classList.add('hidden');
-  confirmation.classList.add('hidden')
+  confirmation.classList.add('hidden');
   regret.classList.remove('hidden');
   regret.textContent = `${getName()}, sorry you can't make it.`;
 });
@@ -140,17 +143,19 @@ const updateConfirmation = () => {
 // Hint: use the isGoing and isNotGoing variables to check.
 
 nameInput.addEventListener('input', () => {
-  // Including the "Stretch" task of hiding Going state.
+  // Stretch: disable the Going button while the name field is empty.
   const nameEmpty = nameInput.value.trim() === '';
-  btnYes.classList.toggle('hidden', nameEmpty);
-  if (isGoing) {
-    guestField.classList.toggle('hidden', nameEmpty);
-    confirmation.classList.toggle('hidden', nameEmpty);
-    updateConfirmation();
+  btnYes.disabled = nameEmpty;
+
+  if (nameEmpty && isGoing) {
+    isGoing = false;
+    btnYes.classList.remove('active');
+    guestField.classList.add('hidden');
+    confirmation.classList.add('hidden');
   }
-  if (isNotGoing) {
-    regret.textContent = `${getName()}, sorry you can't make it.`;
-  }
+
+  if (isGoing) updateConfirmation();
+  if (isNotGoing) regret.textContent = `${getName()}, sorry you can't make it.`;
 });
 
 guestInput.addEventListener('input', () => {

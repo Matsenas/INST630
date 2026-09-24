@@ -152,6 +152,12 @@ input:focus {
     border-color: var(--color-muted);
 }
 
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: var(--color-border);
+}
+
 /* active states — JS adds/removes the .active class */
 .btn-yes.active {
     background: var(--color-yes-light);
