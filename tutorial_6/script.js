@@ -12,14 +12,15 @@ let restaurants = [];
 // TODO 1: A CALLBACK THAT RUNS LATER
 // When the button is clicked, use setTimeout to write "Ready!" into #ready-output
 // after 2 seconds. Predict first: which reaches the log first, "Waiting..." or "Ready!"?
-// My prediction:
+// My prediction: Waiting, then ready
 // ============================================
 
 document.querySelector('#run-todo-1').addEventListener('click', () => {
   startLog('#log-todo-1');
 
-  // YOUR CODE HERE
-  // Hint: setTimeout(() => { ...write 'Ready!' to the page, and log('#log-todo-1', 'Ready!') }, 2000);
+  setTimeout(() => { 
+    log('#log-todo-1', 'Ready!') 
+  }, 2000);
 
   log('#log-todo-1', 'Waiting...');
 });
@@ -34,13 +35,14 @@ document.querySelector('#run-todo-1').addEventListener('click', () => {
 document.querySelector('#load-then').addEventListener('click', () => {
   startLog('#log-then');
 
-  // YOUR CODE HERE
-  // Hint:
-  // fetch('./restaurants.json')
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     ...save data into restaurants, log how many arrived, and call setCountButton(true)
-  //   });
+  fetch('./restaurants.json')
+    .then((response) => response.json())
+    .then((data) => {
+      restaurants = data;
+      log('#log-then', `We have ${restaurants.length} restaurants on the list.`);
+      setCountButton(true);
+     });
+
 
   log('#log-then', 'This line comes after fetch() in the code');
 });
@@ -52,16 +54,19 @@ document.querySelector('#load-then').addEventListener('click', () => {
 // ============================================
 
 document.querySelector('#load-await').addEventListener('click', async () => {
-  // YOUR CODE HERE
-  // Hint: showStatus('loading', 'Loading restaurants...');
-  // Hint: try {
-  //   const response = await fetch('./restaurants.json');
-  //   if (!response.ok) { throw new Error(`HTTP error: ${response.status}`); }
-  //   const data = await response.json();
-  //   ...save it, showStatus('success', ...), setCountButton(true)
-  // } catch (error) {
-  //   ...console.error the error, then showStatus('error', ...) with a friendly message
-  // }
+  
+  showStatus('loading', 'Loading restaurants...');
+  try {
+    const response = await fetch('./restaurants.json');
+    if (!response.ok) { throw new Error(`HTTP error: ${response.status}`); }
+    const data = await response.json();
+    restaurants = data;
+    showStatus('success', `We have ${restaurants.length} restaurants on the list.`);
+    setCountButton(true);
+  } catch (error) {
+    console.error("Error in fetching restaurant data");
+    showStatus('error', "Couldn't load restaurant data :'(")
+  }
 });
 
 // ============================================
@@ -74,10 +79,9 @@ document.querySelector('#load-await').addEventListener('click', async () => {
 document.querySelector('#count-by-price').addEventListener('click', () => {
   const counts = {};
 
-  // YOUR CODE HERE
-  // Hint: restaurants.forEach((restaurant) => {
-  //   counts[restaurant.priceRange] = (counts[restaurant.priceRange] || 0) + 1;
-  // });
+  restaurants.forEach((restaurant) => {
+    counts[restaurant.priceRange] = (counts[restaurant.priceRange] || 0) + 1;
+  });
 
   showCountTable('#count-output', counts);
 });
