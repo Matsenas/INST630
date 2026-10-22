@@ -24,10 +24,11 @@ let priceNumbers = [];
 document.querySelector('#make-lists').addEventListener('click', () => {
   priceCounts = {};
 
-  // YOUR CODE HERE
-  // Hint: count into priceCounts with restaurants.forEach, exactly as in Tutorial 6
-  // Hint: priceLabels = Object.keys(priceCounts);    gives ['$$', '$$$', ...]
-  // Hint: priceNumbers = Object.values(priceCounts); gives [3, 2, ...]
+  restaurants.forEach((restaurant) => {
+    priceCounts[restaurant.priceRange] = (priceCounts[restaurant.priceRange] || 0) + 1;
+  });
+  priceLabels = Object.keys(priceCounts);
+  priceNumbers = Object.values(priceCounts);
 
   showShape('#lists-output', `labels  = ${toText(priceLabels)}\nnumbers = ${toText(priceNumbers)}`);
   setButton('#draw-bar', true);
@@ -45,23 +46,23 @@ document.querySelector('#draw-bar').addEventListener('click', () => {
   // YOUR CODE HERE
   // Hint: uncomment this, and replace each ??? with the right thing
   //
-  // drawChart('#bar-chart', {
-  //   type: '???',
-  //   data: {
-  //     labels: ???,
-  //     datasets: [{ label: 'Restaurants', data: ??? }]
-  //   },
-  //   options: {
-  //     plugins: { title: { display: true, text: '???' } },
-  //     scales: {
-  //       x: { title: { display: true, text: '???' } },
-  //       y: { title: { display: true, text: '???' }, beginAtZero: true }
-  //     }
-  //   }
-  // });
-  //
+  drawChart('#bar-chart', {
+    type: 'bar',
+    data: {
+      labels: priceLabels,
+      datasets: [{ label: 'Restaurants', data: priceNumbers }]
+    },
+    options: {
+      plugins: { title: { display: true, text: 'Bar chart of restaurant price ranges' } },
+      scales: {
+        x: { title: { display: true, text: 'Price range' } },
+        y: { title: { display: true, text: 'Count' }, beginAtZero: true }
+      }
+    }
+  });
+
   // Then write your sentence:
-  // document.querySelector('#bar-summary').textContent = '...';
+  document.querySelector('#bar-summary').textContent = '3 restaurants are priced $$, 2 are $, 2 are $$$ and 1 is $$$$.';
 });
 
 // ============================================
@@ -75,11 +76,10 @@ document.querySelector('#draw-bar').addEventListener('click', () => {
 document.querySelector('#order-bars').addEventListener('click', () => {
   const priceOrder = ['$', '$$', '$$$', '$$$$'];
 
-  // YOUR CODE HERE
-  // Hint: priceLabels = priceOrder;
-  // Hint: priceNumbers = priceOrder.map((price) => {
-  //   return ???;   (look the price up in priceCounts)
-  // });
+  priceLabels = priceOrder;
+  priceNumbers = priceOrder.map((price) => {
+    return priceCounts[price] || 0;
+  });
 
   showShape('#order-output', `labels  = ${toText(priceLabels)}\nnumbers = ${toText(priceNumbers)}`);
 });
@@ -92,15 +92,28 @@ document.querySelector('#order-bars').addEventListener('click', () => {
 // ============================================
 
 document.querySelector('#draw-scatter').addEventListener('click', () => {
-  // YOUR CODE HERE
-  // Hint: const points = restaurants.map((restaurant) => {
-  //   return { x: ???, y: ??? };
-  // });
-  // Hint: showShape('#points-output', `points = ${toText(points)}`); lets you see what you made
-  // Hint: then draw it like TODO 3, with type: 'scatter' and
-  //       data: { datasets: [{ label: 'Restaurants', data: points }] }
-  //       (a scatter chart has no labels list: each point carries its own x and y)
-  // Hint: and write a sentence into #scatter-summary
+  
+  const points = restaurants.map((restaurant) => {
+    return { x: restaurant.priceRange.length, y: restaurant.rating };
+  });
+
+  showShape('#points-output', `points = ${toText(points)}`); // lets you see what you made
+
+  drawChart('#scatter-chart', {
+    type: 'scatter',
+    data: {
+      datasets: [{ label: 'Restaurants', data: points }]
+    },
+    options: {
+      plugins: { title: { display: true, text: 'Scatter chart of restaurant price ranges vs rating' } },
+      scales: {
+        x: { title: { display: true, text: 'Price range' } },
+        y: { title: { display: true, text: 'Rating' } }
+      }
+    }
+  });
+  // Then write your sentence:
+  document.querySelector('#scatter-summary').textContent = 'Data for 8 restaurants. All price ranges have at least one value. Ratings fall between 4.0 and 4.8. There seems to be a positive trend between price range and rating.';
 });
 
 // ============================================
