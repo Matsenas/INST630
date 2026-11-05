@@ -107,8 +107,15 @@ body {
 }
 
 /* TABLE LAYOUT */
+/* Horizontal overflow */
+.table-scroll {
+    overflow-x: auto;
+}
+
+/* Fit content on one line */
 .restaurant-table {
-    width: 100%;
+    width: max-content;
+    min-width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
 }
@@ -117,6 +124,7 @@ body {
 .restaurant-table td {
     padding: 0.75rem;
     text-align: left;
+    white-space: nowrap;
     border-bottom: 1px solid var(--border-color);
 }
 

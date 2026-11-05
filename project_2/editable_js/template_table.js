@@ -69,6 +69,7 @@ function showTable(data) {
     return `
                 <h2 class="view-title">📊 Table View</h2>
                 <p class="view-description">Browse inspections in a table view</p>
+                <div class="table-scroll" tabindex="0" role="region" aria-label="Food inspections table, horizontally scrollable">
                 <table class="restaurant-table">
                     <caption>${data.length} Prince George's County food inspections.</caption>
                     <thead>
@@ -84,6 +85,7 @@ function showTable(data) {
                         ${rowsHTML(data)}
                     </tbody>
                 </table>
+                </div>
             `;
 }
 
