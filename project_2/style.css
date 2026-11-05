@@ -129,6 +129,31 @@ body {
     background: #f8f9fa;
 }
 
+/* Sort buttons */
+.restaurant-table th button {
+    background: none;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    margin-left: -0.5rem;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.restaurant-table th button:hover,
+.restaurant-table th[aria-sort] button {
+    background: var(--primary-color);
+    color: white;
+}
+
+.restaurant-table th button:active,
+.restaurant-table th[aria-sort] button:hover {
+    background: #005a87;
+    color: white;
+}
+
 /* CATEGORY GROUPS */
 .category-section {
     margin-bottom: 2rem;
