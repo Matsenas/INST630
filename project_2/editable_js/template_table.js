@@ -3,23 +3,54 @@
  * TABLE VIEW - STUDENTS IMPLEMENT
  * Display data in sortable rows - good for scanning specific information
  */
+
+// Turns "2026-05-17T00:00:00.000" into "May 17, 2026"
+const formatDate = (isoDate) =>
+  new Date(isoDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+// This dataset writes missing values as "------" or "N/A". Show "Not listed" instead.
+const orNotListed = (value) =>
+  value === '------' || value === 'N/A' || value === undefined ? 'Not listed' : value;
+
+// Counts how many of the compliance checks an inspection failed
+const countOutOfCompliance = (inspection) =>
+  Object.values(inspection).filter((value) => value === 'Out of Compliance').length;
+
 function showTable(data) {
-  // TODO: Students implement this function
-  // Requirements:
-  // - Use a real HTML <table>, with <th> header cells and a <caption> saying what the table shows
-  // - Include the 4-6 most useful fields
-  // - Show "Not listed" instead of undefined when a value is missing
-  // - Optional: add sorting
-  /*html*/ 
+  const rowsHTML = data
+    .map(
+      /*html*/
+      (inspection) => `
+                    <tr>
+                        <th scope="row">${inspection.name}</th>
+                        <td>${orNotListed(inspection.category)}</td>
+                        <td><time datetime="${inspection.inspection_date}">${formatDate(inspection.inspection_date)}</time></td>
+                        <td>${orNotListed(inspection.inspection_results)}</td>
+                        <td>${countOutOfCompliance(inspection)}</td>
+                    </tr>
+            `
+    )
+    .join("");
+
+  /*html*/
   return `
                 <h2 class="view-title">📊 Table View</h2>
-                <div class="todo-implementation">
-                    <h3>TODO: Implement Table View</h3>
-                    <p><strong>Your task:</strong> Display the data as a real HTML table, with header cells and a caption</p>
-                    <p><strong>Good for:</strong> Scanning specific data points, comparing values, finding specific information</p>
-                    <p><strong>Consider:</strong> Which columns are most important? How can you make scanning easy?</p>
-                    <p><strong>Data available:</strong> ${data.length} items loaded</p>
-                </div>
+                <p class="view-description">Browse inspections in a table view</p>
+                <table class="restaurant-table">
+                    <caption>${data.length} Prince George's County food inspections.</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Inspected</th>
+                            <th scope="col">Result</th>
+                            <th scope="col">Out of compliance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rowsHTML}
+                    </tbody>
+                </table>
             `;
 }
 
