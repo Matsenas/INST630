@@ -192,12 +192,21 @@ body {
     padding: 1rem;
     margin: 0;
     border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-header h3 {
+    margin: 0;
 }
 
 .category-items {
     border: 1px solid var(--border-color);
     border-top: none;
     border-radius: 0 0 8px 8px;
+    margin: 0;
+    padding: 0;
 }
 
 .category-item {
@@ -206,6 +215,18 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.category-item > * {
+    flex: 1;
+}
+
+.category-item time {
+    text-align: center;
+}
+
+.category-item > :last-child {
+    text-align: right;
 }
 
 .category-item:last-child {
