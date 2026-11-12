@@ -31,6 +31,7 @@ No transpiler is configured; browsers run the source as written.
 - Add a new assignment as a new top-level `tutorial_N/` folder, then link it from the assignment list in `index.html`.
 - Keep files relative-linked so they resolve under the GitHub Pages subdirectory.
 - Preview locally by opening the file in a browser, or having the user manually view with Live Server plugin.
+
 ## Project 1 — Recipe card (`project_1/`)
 
 Assignment brief, kept here so the instructions block could be removed from the page.
@@ -54,3 +55,5 @@ Focus areas:
 - Mobile-first: design works on small screens.
 
 Visual direction: the MORPHEUSamp Winamp skin (black ground, phosphor-green outline boxes, pixel display type) applied to the chrome, with body copy kept large and readable.
+
+Do not follow project-based styling recommendations across projects or tutorials. Assume everything is standalone.
