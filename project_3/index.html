@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Project 3</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Scrollama via script tag exposes a global `scrollama` function -->
+    <script src="https://cdn.jsdelivr.net/npm/scrollama@3.2.0/build/scrollama.min.js"></script>
     <script type="module" src="script.js"></script>
 </head>
 <body>
@@ -13,6 +15,22 @@
     </header>
 
     <main>
+        <section class="intro">
+            <p>Scroll down to see my Scrollama setup :)</p>
+        </section>
+
+        <section class="scrolly" aria-label="Scrolling story">
+            <div class="scrolly__steps">
+                <!-- Steps are rendered from the data in script.js -->
+            </div>
+            <figure class="scrolly__figure">
+                <!-- Images are rendered from the data in script.js -->
+            </figure>
+        </section>
+
+        <section class="outro">
+            <p>End of the story.</p>
+        </section>
     </main>
 
     <footer>
